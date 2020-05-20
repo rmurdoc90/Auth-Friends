@@ -1,7 +1,7 @@
 import {axiosWithAuth} from '../utils/axiosWithAuth';
 import React from 'react';
 
-class newFriends extends React.Component{
+class newFriend extends React.Component{
     state = {
         credentials: {
             name:'',
@@ -19,13 +19,12 @@ class newFriends extends React.Component{
         });
       };
 
-    submit = e => {
+    addFriend = e => {
             e.preventDefault();
             axiosWithAuth()
-            .post("/api/friends", this.state.credentials)
+            .post('/api/friends', this.state.credentials)
             .then(res => {
-                localStorage.setItem("token", res.data.payload);
-                this.props.history.push("/protected");
+                this.addFriend(res)
             })
             .catch(err => console.log(err));
             };
@@ -33,31 +32,34 @@ class newFriends extends React.Component{
     render(){
         return(
             <div>
-                <form onSubmit={this.submit}>
+                <form >
                    <input
                    type='text'
                    name='name'
+                   placeholder='name'
                    value={this.state.credentials.name}
                    onChange={this.handleChange}
                    /> 
                      <input
                    type='text'
                    name='age'
+                   placeholder='age'
                    value={this.state.credentials.age}
                    onChange={this.handleChange}
                    /> 
                      <input
                    type='text'
                    name='email'
+                   placeholder='email'
                    value={this.state.credentials.email}
                    onChange={this.handleChange}
                    /> 
-                    <button>Submit</button>
+                    <button onClick={this.addFriend}>Add Friend</button>
                 </form>
             </div>
         )
     }
 }
 
-export default newFriends
+export default newFriend
 

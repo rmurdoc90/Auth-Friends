@@ -1,6 +1,5 @@
 import React from 'react';
-import axios from 'axios';
-import {axiosWithAuth} from '../utils/axiosWithAuth';
+import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 class Login extends React.Component{
     state = {
@@ -9,20 +8,7 @@ class Login extends React.Component{
             password:''
         }
     }
-    componentDidMount(){
-    axios
-    .post('http://localhost:5000/api/login', {
-        username:'Lambda School',
-        password: 'i<3Lambd4',
-    })
-    .then(res=>{
-        console.log(res)
-    })
-    .catch(err=>{
-        console.log(err)
-    })
-}
-
+    
     handleChange = e => {
         this.setState({
           credentials: {
@@ -32,43 +18,37 @@ class Login extends React.Component{
         });
       };
 
-    submit = e => {
+    login = e => {
         e.preventDefault();
         axiosWithAuth()
-        .post("/api/login", this.state.credentials)
+        .post('/api/login', this.state.credentials)
         .then(res => {
-            localStorage.setItem("token", res.data.payload);
-            this.props.history.push("/protected");
+            localStorage.setItem('token', res.data.payload);
+            this.props.history.push('/friends');
         })
         .catch(err => console.log(err));
-        
-        
-        // axios
-        // .post('http://localhost:5000/api/login', {...this.state.credentials})
-        // .then(res=>{
-        //     localStorage.setItem("token", res.data.payload);
-        //     this.props.history.push("/protected");
-        //     console.log(res)
-        // })
+
       };
 
     render(){
         return(
             <div>
-                <form onSubmit={this.submit}>
+                <form >
                    <input
                    type='text'
                    name='username'
+                   placeholder='username'
                    value={this.state.credentials.username}
                    onChange={this.handleChange}
                    /> 
                      <input
                    type='text'
                    name='password'
+                   placeholder='password'
                    value={this.state.credentials.password}
                    onChange={this.handleChange}
                    /> 
-                    <button>Submit</button>
+                    <button onClick={this.login}>Login</button>
                 </form>
             </div>
         )
