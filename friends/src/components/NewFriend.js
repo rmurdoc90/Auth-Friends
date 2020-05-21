@@ -18,13 +18,14 @@ class newFriend extends React.Component{
           }
         });
       };
-
+    
+  
     addFriend = e => {
             e.preventDefault();
             axiosWithAuth()
             .post('/api/friends', this.state.credentials)
             .then(res => {
-                this.addFriend(res)
+                console.log(res)
             })
             .catch(err => console.log(err));
             };
